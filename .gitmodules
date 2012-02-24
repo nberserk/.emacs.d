@@ -1,0 +1,3 @@
+[submodule "site-lisp/yasnippet"]
+	path = site-lisp/yasnippet
+	url = https://github.com/capitaomorte/yasnippet.git

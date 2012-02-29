@@ -66,11 +66,11 @@
 
 ;; highlight the current line; set a custom face, so we can
 ;; recognize from the normal marking (selection)
-;; http://emacs-fu.blogspot.com/2008/12/highlighting-current-line.html
+;; ;; http://emacs-fu.blogspot.com/2008/12/highlighting-current-line.html
 (defface hl-line '((t (:background "black")))
   "Face to use for `hl-line-face'." :group 'hl-line)
-(setq hl-line-face 'hl-line)
-(global-hl-line-mode t) ; turn it on for all modes by default
+ (setq hl-line-face 'hl-line)
+ (global-hl-line-mode t) ; turn it on for all modes by default
 
 ;; ;; winner mode
 ;; (when (fboundp 'winner-mode) (winner-mode 1))
@@ -422,3 +422,6 @@ in current buffer."
 ;; http://www.emacswiki.org/emacs/AceJump
 (require 'ace-jump-mode)
 (define-key global-map (kbd "M-m") 'ace-jump-mode)
+
+(require 'expand-region)
+(global-set-key (kbd "C-@") 'er/expand-region)

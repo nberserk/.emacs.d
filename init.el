@@ -413,15 +413,18 @@ in current buffer."
 (require 'browse-kill-ring+)
 
 ;; jump-char
-;; http://emacsrocks.com/e04.html
-;; (require 'jump-char)
-;; (global-set-key [(meta m)] 'jump-char-forward)
-;; (global-set-key [(shift meta m)] 'jump-char-backward)
+;; http://emacsrocks.com/e04.
+(require 'jump-char)
+(global-set-key [(meta m)] 'jump-char-forward)
+(global-set-key [(shift meta m)] 'jump-char-backward)
 
 ;; ace jump
 ;; http://www.emacswiki.org/emacs/AceJump
 (require 'ace-jump-mode)
-(define-key global-map (kbd "M-m") 'ace-jump-mode)
+(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 
 (require 'expand-region)
 (global-set-key (kbd "C-@") 'er/expand-region)
+
+;; magit
+(require 'magit)

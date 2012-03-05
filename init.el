@@ -37,16 +37,13 @@
 ;; (require 'package)
 ;; (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 
-;; are we on windows?
-(setq is-nt (equal system-type 'windows-nt))
-(when is-nt (require 'windows))
+;; Save point position between sessions
+(require 'saveplace)
+(setq-default save-place t)
+(setq save-place-file (expand-file-name ".places" dotfiles-dir))
 
 ;; auto pair
 (electric-pair-mode)
-
-;; theme
-(add-to-list 'custom-theme-load-path (expand-file-name  "themes" dotfiles-dir))
-(load-theme 'zenburn 'y 'y)
 
 ;; powershell-mode
 (autoload 'powershell-mode "powershell-mode" "A editing mode for Microsoft PowerShell." t)
@@ -63,14 +60,6 @@
 
 ;; show column number
 (setq column-number-mode t)
-
-;; highlight the current line; set a custom face, so we can
-;; recognize from the normal marking (selection)
-;; ;; http://emacs-fu.blogspot.com/2008/12/highlighting-current-line.html
-(defface hl-line '((t (:background "black")))
-  "Face to use for `hl-line-face'." :group 'hl-line)
- (setq hl-line-face 'hl-line)
- (global-hl-line-mode t) ; turn it on for all modes by default
 
 ;; ;; winner mode
 ;; (when (fboundp 'winner-mode) (winner-mode 1))
@@ -134,10 +123,6 @@
 
 ;; (savehist-mode t)
 (defalias 'yes-or-no-p 'y-or-n-p)
-
-;;server-mode
-(server-start)
-(remove-hook 'kill-buffer-query-functions 'server-kill-buffer-query-function) ;remove close confirm.http://shreevatsa.wordpress.com/2007/01/06/using-emacsclient/
 
 ;; ;; autoload powershell interactive shell
 ;; (autoload 'powershell "powershell" "interactive shell of PowerShell." t)
@@ -424,7 +409,19 @@ in current buffer."
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 
 (require 'expand-region)
-(global-set-key (kbd "C-@") 'er/expand-region)
+(global-set-key (kbd "C-'") 'er/expand-region)
 
 ;; magit
 (require 'magit)
+
+;; are we on windows?
+(setq is-nt (equal system-type 'windows-nt))
+(when is-nt (require 'windows))
+
+;; highlight the current line; set a custom face, so we can
+;; recognize from the normal marking (selection)
+;; ;; http://emacs-fu.blogspot.com/2008/12/highlighting-current-line.html
+(defface hl-line '((t (:background "black")))
+  "Face to use for `hl-line-face'." :group 'hl-line)
+(setq hl-line-face 'hl-line)
+(global-hl-line-mode t) ; turn it on for all modes by default

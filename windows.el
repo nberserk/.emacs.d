@@ -4,6 +4,6 @@
 
 ;; theme
 (add-to-list 'custom-theme-load-path (expand-file-name  "themes" dotfiles-dir))
-(load-theme 'zenburn 'y 'y)
+(load-theme 'zenburn 'y )
 
 (provide 'windows)

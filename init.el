@@ -426,4 +426,4 @@ in current buffer."
 (setq hl-line-face 'hl-line)
 (global-hl-line-mode t) ; turn it on for all modes by default
 
-(desktop-save-mode 1)
+;; (desktop-save-mode 1)

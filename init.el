@@ -427,3 +427,13 @@ in current buffer."
 (global-hl-line-mode t) ; turn it on for all modes by default
 
 ;; (desktop-save-mode 1)
+(defun smart-beginning-of-line ()
+  "Move point to first non-whitespace character or beginning-of-line."
+  (interactive)
+  (let ((oldpos (point)))
+	(back-to-indentation)
+	(and (= oldpos (point))
+		 (beginning-of-line))))
+
+(global-set-key (kbd "C-a") 'smart-beginning-of-line)
+(global-set-key [home] 'smart-beginning-of-line)

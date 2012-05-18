@@ -437,3 +437,4 @@ in current buffer."
 
 (global-set-key (kbd "C-a") 'smart-beginning-of-line)
 (global-set-key [home] 'smart-beginning-of-line)
+

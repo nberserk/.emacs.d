@@ -421,10 +421,10 @@ in current buffer."
 ;; highlight the current line; set a custom face, so we can
 ;; recognize from the normal marking (selection)
 ;; ;; http://emacs-fu.blogspot.com/2008/12/highlighting-current-line.html
-(defface hl-line '((t (:background "black")))
-  "Face to use for `hl-line-face'." :group 'hl-line)
-(setq hl-line-face 'hl-line)
-(global-hl-line-mode t) ; turn it on for all modes by default
+;; (defface hl-line '((t (:background "black")))
+;;   "Face to use for `hl-line-face'." :group 'hl-line)
+;; (setq hl-line-face 'hl-line)
+;; (global-hl-line-mode t) ; turn it on for all modes by default
 
 ;; (desktop-save-mode 1)
 (defun smart-beginning-of-line ()
@@ -438,3 +438,5 @@ in current buffer."
 (global-set-key (kbd "C-a") 'smart-beginning-of-line)
 (global-set-key [home] 'smart-beginning-of-line)
 
+;; change default buffer mgmt to ibuffer
+(global-set-key (kbd "C-x C-b") 'ibuffer)

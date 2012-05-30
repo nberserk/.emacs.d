@@ -409,7 +409,7 @@ in current buffer."
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 
 (require 'expand-region)
-(global-set-key (kbd "C-'") 'er/expand-region)
+(global-set-key (kbd "C-@") 'er/expand-region)
 
 ;; magit
 (require 'magit)

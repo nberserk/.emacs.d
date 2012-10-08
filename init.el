@@ -4,7 +4,7 @@
 (setq inhibit-startup-message t)
 
 ;; titlebar
-(setq frame-title-format 'buffer-file-name)
+(setq frame-title-format '("emacs - "> buffer-file-name))
 ;; (setq frame-title-format '(buffer-name "%f" ("%b")))
 
 ;; Set path to .emacs.d
@@ -34,8 +34,11 @@
 ;; auto indent
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
-;; (require 'package)
-;; (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+;; package
+(setq url-proxy-services '( ("http" . "168.219.61.250:8080")))
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(package-initialize)
 
 ;; Save point position between sessions
 (require 'saveplace)
@@ -53,9 +56,9 @@
 (require 'yasnippet) ;; not yasnippet-bundle
 ;; Develop in ~/emacs.d/snippets, but also
 ;; include snippets that come with yasnippet
-(setq yas/root-directory `(,(expand-file-name "snippets" dotfiles-dir)
-			   ,(expand-file-name "yasnippet/snippets" site-lisp-dir)))
-(mapc 'yas/load-directory yas/root-directory)
+;;(setq yas/root-directory `(,(expand-file-name "snippets" dotfiles-dir)))
+;;			   ,(expand-file-name "yasnippet/snippets" site-lisp-dir)))
+;;(mapc 'yas/load-directory yas/root-directory)
 (yas/global-mode 1)
 
 ;; show column number
@@ -409,7 +412,7 @@ in current buffer."
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 
 (require 'expand-region)
-(global-set-key (kbd "C-@") 'er/expand-region)
+(global-set-key (kbd "C-c e") 'er/expand-region)
 
 ;; magit
 (require 'magit)
@@ -440,3 +443,20 @@ in current buffer."
 
 ;; change default buffer mgmt to ibuffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
+
+(require 'inline-string-rectangle)
+(global-set-key (kbd "C-x r t") 'inline-string-rectangle)
+
+(require 'mark-more-like-this)
+(global-set-key (kbd "C-<") 'mark-previous-like-this)
+(global-set-key (kbd "C->") 'mark-next-like-this)
+(global-set-key (kbd "C-M-m") 'mark-more-like-this) ; like the other two, but takes an argument (negative is previous)
+(global-set-key (kbd "C-*") 'mark-all-like-this)
+
+;; (require 'rename-sgml-tag)
+;; (define-key sgml-mode-map (kbd "C-c C-r") 'rename-sgml-tag)
+
+;; (require 'js2-rename-var)
+;; (define-key js2-mode-map (kbd "C-c C-r") 'js2-rename-var)
+
+(require 'wgrep)

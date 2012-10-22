@@ -35,7 +35,7 @@
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
 ;; package
-(setq url-proxy-services '( ("http" . "168.219.61.250:8080")))
+(setq url-proxy-services '( ("http" . "168.219.61.252:8080")))
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (package-initialize)
@@ -143,7 +143,10 @@
 ;; (add-to-list 'auto-mode-alist '("\\.bat\\'" . dos-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.cmd\\'" . dos-mode))
 
-;; ;; org
+;; org
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((sh . true) (python . true)))
 ;; (setq org-log-done 'time)
 ;; (add-hook 'org-mode-hook 
 ;;   (lambda () 
@@ -447,12 +450,6 @@ in current buffer."
 (require 'inline-string-rectangle)
 (global-set-key (kbd "C-x r t") 'inline-string-rectangle)
 
-(require 'mark-more-like-this)
-(global-set-key (kbd "C-<") 'mark-previous-like-this)
-(global-set-key (kbd "C->") 'mark-next-like-this)
-(global-set-key (kbd "C-M-m") 'mark-more-like-this) ; like the other two, but takes an argument (negative is previous)
-(global-set-key (kbd "C-*") 'mark-all-like-this)
-
 ;; (require 'rename-sgml-tag)
 ;; (define-key sgml-mode-map (kbd "C-c C-r") 'rename-sgml-tag)
 
@@ -460,3 +457,21 @@ in current buffer."
 ;; (define-key js2-mode-map (kbd "C-c C-r") 'js2-rename-var)
 
 (require 'wgrep)
+
+;; (if (eq system-uses-terminfo t)
+;; 	(progn                              ;; PuTTY hack - needs to be in SCO mode
+;; 	  (define-key input-decode-map "\eOn" [C->])))
+
+
+;; multiple-cursor
+(require 'multiple-cursors)
+(global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
+(global-set-key (kbd "C-<") 'mc/mark-prev-like-this)
+(global-set-key (kbd "C->") 'mc/mark-next-like-this)
+(global-set-key (kbd "C-c C-M-.") 'mc/mark-all-like-this)
+;;[(shift meta m)] 'jump-char-backward)
+
+(defun darren-org-export-as-html ()
+  "override org-export-as-html with bodyonly option"
+  (interactive)
+  (org-export-as-html nil nil nil nil t nil))

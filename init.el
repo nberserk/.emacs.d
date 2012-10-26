@@ -4,7 +4,7 @@
 (setq inhibit-startup-message t)
 
 ;; titlebar
-(setq frame-title-format '("emacs - "> buffer-file-name))
+(setq frame-title-format '("emacs - " buffer-file-name))
 ;; (setq frame-title-format '(buffer-name "%f" ("%b")))
 
 ;; Set path to .emacs.d
@@ -46,14 +46,14 @@
 (setq save-place-file (expand-file-name ".places" dotfiles-dir))
 
 ;; auto pair
-(electric-pair-mode)
+;; (electric-pair-mode)
 
 ;; powershell-mode
 (autoload 'powershell-mode "powershell-mode" "A editing mode for Microsoft PowerShell." t)
 (add-to-list 'auto-mode-alist '("\\.ps1\\'" . powershell-mode)) ; PowerShell script
 
 ;;yasnippet from http://xahlee.org/emacs/emacs_templates.html
-(require 'yasnippet) ;; not yasnippet-bundle
+(require 'setup-yasnippet) ;; not yasnippet-bundle
 ;; Develop in ~/emacs.d/snippets, but also
 ;; include snippets that come with yasnippet
 ;;(setq yas/root-directory `(,(expand-file-name "snippets" dotfiles-dir)))

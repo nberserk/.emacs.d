@@ -3,6 +3,10 @@
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (setq inhibit-startup-message t)
 
+;; proxy setting
+(setq need-proxy (not (equal (getenv "COMPUTERNAME") "DARREN-HOME")))
+(when need-proxy (setq url-proxy-services '( ("http" . "168.219.61.252:8080"))))
+
 ;; titlebar
 (setq frame-title-format '("emacs - " buffer-file-name))
 ;; (setq frame-title-format '(buffer-name "%f" ("%b")))
@@ -35,10 +39,28 @@
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
 ;; package
-(setq url-proxy-services '( ("http" . "168.219.61.252:8080")))
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(package-initialize)
+(require 'setup-package)
+
+;; Install extensions if they're missing
+(defun init--install-packages ()
+  (packages-install
+;   (cons 'exec-path-from-shell melpa)
+   (cons 'magit melpa)
+   (cons 'yasnippet melpa)
+   (cons 'ace-jump-mode melpa)
+   (cons 'jump-char melpa)
+   (cons 'expand-region melpa)
+   (cons 'wgrep melpa)
+   (cons 'mark-multiple melpa)
+   (cons 'multiple-cursors melpa)
+;   (cons 'paredit melpa)
+      ))
+
+(condition-case nil
+    (init--install-packages)
+  (error
+   (package-refresh-contents)
+   (init--install-packages)))
 
 ;; Save point position between sessions
 (require 'saveplace)
@@ -401,7 +423,7 @@ in current buffer."
 
 ;; browse-kill-ring+
 ;; http://www.emacswiki.org/emacs/BrowseKillRing
-(require 'browse-kill-ring+)
+;;(require 'browse-kill-ring+)
 
 ;; jump-char
 ;; http://emacsrocks.com/e04.
@@ -447,8 +469,8 @@ in current buffer."
 ;; change default buffer mgmt to ibuffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
-(require 'inline-string-rectangle)
-(global-set-key (kbd "C-x r t") 'inline-string-rectangle)
+;; (require 'inline-string-rectangle)
+;; (global-set-key (kbd "C-x r t") 'inline-string-rectangle)
 
 ;; (require 'rename-sgml-tag)
 ;; (define-key sgml-mode-map (kbd "C-c C-r") 'rename-sgml-tag)

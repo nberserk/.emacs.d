@@ -68,7 +68,7 @@
 (setq save-place-file (expand-file-name ".places" dotfiles-dir))
 
 ;; auto pair
-;; (electric-pair-mode)
+(electric-pair-mode)
 
 ;; powershell-mode
 (autoload 'powershell-mode "powershell-mode" "A editing mode for Microsoft PowerShell." t)
@@ -441,6 +441,7 @@ in current buffer."
 
 ;; magit
 (require 'magit)
+(global-set-key (kbd "C-x g") 'magit-status)
 
 ;; are we on windows?
 (setq is-nt (equal system-type 'windows-nt))

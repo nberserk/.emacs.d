@@ -38,29 +38,39 @@
 ;; auto indent
 (define-key global-map (kbd "RET") 'newline-and-indent)
 
+;; helm
+;;(require 'helm-config)
+(require 'helm-files)
+(setq helm-idle-delay 0.1)
+(setq helm-input-idle-delay 0.1)
+(setq helm-c-locate-command "locate-with-mdfind %.0s %s")
+;; ;; (loop for ext in '("\\.swf$" "\\.elc$" "\\.pyc$")
+;; ;; 	        do (add-to-list 'helm-c-boring-file-regexp-list ext))
+(define-key global-map (kbd "M-t") 'helm-for-files)
+
 ;; package
 (require 'setup-package)
 
 ;; Install extensions if they're missing
-(defun init--install-packages ()
-  (packages-install
-;   (cons 'exec-path-from-shell melpa)
-   (cons 'magit melpa)
-   (cons 'yasnippet melpa)
-   (cons 'ace-jump-mode melpa)
-   (cons 'jump-char melpa)
-   (cons 'expand-region melpa)
-   (cons 'wgrep melpa)
-   (cons 'mark-multiple melpa)
-   (cons 'multiple-cursors melpa)
-;   (cons 'paredit melpa)
-      ))
+;; (defun init--install-packages ()
+;;   (packages-install
+;; ;   (cons 'exec-path-from-shell melpa)
+;;    (cons 'magit melpa)
+;;    ;(cons 'yasnippet melpa)
+;;    (cons 'ace-jump-mode melpa)
+;;    (cons 'jump-char melpa)
+;;    (cons 'expand-region melpa)
+;;    (cons 'wgrep melpa)
+;;    (cons 'mark-multiple melpa)
+;;    (cons 'multiple-cursors melpa)
+;; ;   (cons 'paredit melpa)
+;;       ))
 
-(condition-case nil
-    (init--install-packages)
-  (error
-   (package-refresh-contents)
-   (init--install-packages)))
+;; (condition-case nil
+;;     (init--install-packages)
+;;   (error
+;;    (package-refresh-contents)
+;;    (init--install-packages)))
 
 ;; Save point position between sessions
 (require 'saveplace)
@@ -71,17 +81,17 @@
 (electric-pair-mode)
 
 ;; powershell-mode
-(autoload 'powershell-mode "powershell-mode" "A editing mode for Microsoft PowerShell." t)
-(add-to-list 'auto-mode-alist '("\\.ps1\\'" . powershell-mode)) ; PowerShell script
+;; (autoload 'powershell-mode "powershell-mode" "A editing mode for Microsoft PowerShell." t)
+;; (add-to-list 'auto-mode-alist '("\\.ps1\\'" . powershell-mode)) ; PowerShell script
 
 ;;yasnippet from http://xahlee.org/emacs/emacs_templates.html
-(require 'setup-yasnippet) ;; not yasnippet-bundle
+;(require 'setup-yasnippet) ;; not yasnippet-bundle
 ;; Develop in ~/emacs.d/snippets, but also
 ;; include snippets that come with yasnippet
 ;;(setq yas/root-directory `(,(expand-file-name "snippets" dotfiles-dir)))
 ;;			   ,(expand-file-name "yasnippet/snippets" site-lisp-dir)))
 ;;(mapc 'yas/load-directory yas/root-directory)
-(yas/global-mode 1)
+;(yas/global-mode 1)
 
 ;; show column number
 (setq column-number-mode t)
@@ -128,13 +138,22 @@
 ;; 			(setq fill-column 100)))
 
 ; tab
-(setq-default tab-width 4)
-;(setq c-basic-offset 4)
-(setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 48 56 64 72))
+(setq-default indent-tabs-mode nil)
+
+; c/c++
+(setq-default tab-width 4
+              c-basic-offset 8
+              indent-tabs-mode nil)
+;(setq c-basic-indent 4)
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (c-set-style "stroustrup")))
+
+;(setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 48 56 64 72))
 ;; i wonder below line is necessary. not enough tab-width ?
-(add-hook 'cmake-mode-hook 
-  (lambda () 
-	(setq cmake-tab-width 4)))
+;; (add-hook 'cmake-mode-hook 
+;;   (lambda () 
+;; 	(setq cmake-tab-width 4)))
 
 ;; ;; highlighting TODO FIXME ...
 ;; ;; http://emacs-fu.blogspot.com/2008/12/highlighting-todo-fixme-and-friends.html
@@ -230,10 +249,6 @@
 ;; (setq abbrev-file-name "d:/Dropbox/emacs-23.2/site-lisp/abbrev_defs.el")
 ;; ;; always on
 ;; (setq default-abbrev-mode t)
-
-;; (add-hook 'c-mode-common-hook
-;;           (lambda ()
-;;             (c-set-style "stroustrup")))
 
 ;; smart scan start
 ;; from http://www.masteringemacs.org/articles/2011/01/14/effective-editing-movement/

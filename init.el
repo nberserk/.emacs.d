@@ -40,13 +40,13 @@
 
 ;; helm
 ;;(require 'helm-config)
-(require 'helm-files)
-(setq helm-idle-delay 0.1)
-(setq helm-input-idle-delay 0.1)
-(setq helm-c-locate-command "locate-with-mdfind %.0s %s")
+;; (require 'helm-files)
+;; (setq helm-idle-delay 0.1)
+;; (setq helm-input-idle-delay 0.1)
+;; (setq helm-c-locate-command "locate-with-mdfind %.0s %s")
 ;; ;; (loop for ext in '("\\.swf$" "\\.elc$" "\\.pyc$")
 ;; ;; 	        do (add-to-list 'helm-c-boring-file-regexp-list ext))
-(define-key global-map (kbd "M-t") 'helm-for-files)
+;(define-key global-map (kbd "M-t") 'helm-for-files)
 
 ;; package
 (require 'setup-package)
@@ -452,7 +452,7 @@ in current buffer."
 (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 
 (require 'expand-region)
-(global-set-key (kbd "C-c e") 'er/expand-region)
+(global-set-key (kbd "C-\\") 'er/expand-region)
 
 ;; magit
 (require 'magit)
@@ -465,10 +465,10 @@ in current buffer."
 ;; highlight the current line; set a custom face, so we can
 ;; recognize from the normal marking (selection)
 ;; ;; http://emacs-fu.blogspot.com/2008/12/highlighting-current-line.html
-;; (defface hl-line '((t (:background "black")))
-;;   "Face to use for `hl-line-face'." :group 'hl-line)
-;; (setq hl-line-face 'hl-line)
-;; (global-hl-line-mode t) ; turn it on for all modes by default
+(defface hl-line '((t (:background "Gray10")))
+  "Face to use for `hl-line-face'." :group 'hl-line)
+(setq hl-line-face 'hl-line)
+(global-hl-line-mode t) ; turn it on for all modes by default
 
 ;; (desktop-save-mode 1)
 (defun smart-beginning-of-line ()
@@ -481,6 +481,11 @@ in current buffer."
 
 (global-set-key (kbd "C-a") 'smart-beginning-of-line)
 (global-set-key [home] 'smart-beginning-of-line)
+
+(show-paren-mode 1)
+
+;; c++
+(setq-default c-basic-offset 4)
 
 ;; change default buffer mgmt to ibuffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
@@ -513,3 +518,15 @@ in current buffer."
   "override org-export-as-html with bodyonly option"
   (interactive)
   (org-export-as-html nil nil nil nil t nil))
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(font-lock-string-face ((t (:foreground "color-34")))))

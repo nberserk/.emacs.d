@@ -140,14 +140,15 @@
 ; tab
 (setq-default indent-tabs-mode nil)
 
-; c/c++
+; c/cpp
+(require 'cc-mode)
 (setq-default tab-width 4
-              c-basic-offset 8
+              c-basic-offset 4
               indent-tabs-mode nil)
-;(setq c-basic-indent 4)
 (add-hook 'c-mode-common-hook
           (lambda ()
             (c-set-style "stroustrup")))
+(define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
 
 ;(setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 48 56 64 72))
 ;; i wonder below line is necessary. not enough tab-width ?
@@ -482,7 +483,7 @@ in current buffer."
 (global-set-key (kbd "C-a") 'smart-beginning-of-line)
 (global-set-key [home] 'smart-beginning-of-line)
 
-(show-paren-mode 1)
+(show-paren-mode 0)
 
 ;; c++
 (setq-default c-basic-offset 4)

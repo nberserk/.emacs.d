@@ -1,34 +1,40 @@
-;; hide toolbar/scrollbar
-(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
-(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
-(setq inhibit-startup-message t)
-
-;; proxy setting
-(setq need-proxy (not (equal (getenv "COMPUTERNAME") "DARREN-HOME")))
-(when need-proxy (setq url-proxy-services '( ("http" . "168.219.61.252:8080"))))
-
 ;; titlebar
 (setq frame-title-format '("emacs - " buffer-file-name))
 ;; (setq frame-title-format '(buffer-name "%f" ("%b")))
 
+;; hide toolbar/scrollbar
+(if (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+(setq inhibit-startup-message t)
+(setq visible-bell 1)
+
+(if window-system
+    (set-frame-size (selected-frame) 160 60))
+
+
+;; proxy setting
+(defun darren-proxy ()
+  "set proxy. must be called when in company"
+  (interactive)
+  (setq url-proxy-services '( ("http" . "168.219.61.252:8080")))
+  )
+
+;; load path
 ;; Set path to .emacs.d
 (setq dotfiles-dir (file-name-directory
 		    (or (buffer-file-name) load-file-name)))
-
 ;; Set path to dependencies
 (setq site-lisp-dir (expand-file-name "site-lisp" dotfiles-dir))
+(setq my-lisp-dir (expand-file-name "lisp" dotfiles-dir))
 
 ;; Set up load path
-(add-to-list 'load-path dotfiles-dir)
 (add-to-list 'load-path site-lisp-dir)
+(add-to-list 'load-path my-lisp-dir)
 
 ;; Add external projects to load path
 (dolist (project (directory-files site-lisp-dir t "\\w+"))
     (when (file-directory-p project)
-          (add-to-list 'load-path project)))
-
-;; darren variable
-;;(setq darren-site-lisp (replace-regexp-in-string "bin" "site-lisp" invocation-directory))
+      (add-to-list 'load-path project)))
 
 ; backup
 (setq make-backup-files nil) ; stop creating those backup~ files 
@@ -147,7 +153,9 @@
               indent-tabs-mode nil)
 (add-hook 'c-mode-common-hook
           (lambda ()
-            (c-set-style "stroustrup")))
+            (c-set-style "stroustrup")
+            (c-toglle-auto-newline t)
+             ))
 (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
 
 ;(setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 48 56 64 72))
@@ -176,15 +184,6 @@
 ;; (add-to-list 'auto-mode-alist '("CMakeLists\\.txt\\'" . cmake-mode))
 ;; (add-to-list 'auto-mode-alist '("\\.cmake\\'" . cmake-mode))
 
-;; ;; nsis mode
-;; (autoload 'nsis-mode "nsis-mode" "NSIS mode" t)
-;; (add-to-list 'auto-mode-alist '("\\.\\([Nn][Ss][Ii]\\)$" . nsis-mode))
-
-;; ;; dos-mode
-;; (autoload 'dos-mode "dos-mode" "A editing mode for Dos." t)
-;; (add-to-list 'auto-mode-alist '("\\.bat\\'" . dos-mode))
-;; (add-to-list 'auto-mode-alist '("\\.cmd\\'" . dos-mode))
-
 ;; org
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -195,11 +194,11 @@
 ;; 	(setq org-hide-leading-stars t)
 ;; 	(setq org-indent-mode t)))
 
-;; ;; window navigation helper key
-;; (global-set-key (kbd "C-x <up>") 'windmove-up) 
-;; (global-set-key (kbd "C-x <down>") 'windmove-down) 
-;; (global-set-key (kbd "C-x <right>") 'windmove-right) 
-;; (global-set-key (kbd "C-x <left>") 'windmove-left)
+;; window navigation helper key
+(global-set-key (kbd "C-x <up>") 'windmove-up) 
+(global-set-key (kbd "C-x <down>") 'windmove-down) 
+(global-set-key (kbd "C-x <right>") 'windmove-right) 
+(global-set-key (kbd "C-x <left>") 'windmove-left)
 
 ;; ido makes competing buffers and finding files easier
 ;; http://www.emacswiki.org/cgi-bin/wiki/InteractivelyDoThings
@@ -207,11 +206,9 @@
   ido-save-directory-list-file "~/.emacs.d/ido.last"
 
   ido-ignore-buffers ;; ignore these guys
- '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace"
-     "^\*compilation" "^\*GTAGS" "^session\.*" "^\*")
+  '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace" "^\*compilation" "^\*GTAGS" "^session\.*")
 ;;  ido-work-directory-list '("/WSs/OspdScripts/")
   ido-case-fold  t                 ; be case-insensitive
-
   ido-enable-last-directory-history t ; remember last used dirs
   ido-max-work-directory-list 30   ; should be enough
   ido-max-work-file-list      50   ; remember many
@@ -383,21 +380,21 @@ instead."
 		  (add-to-list 'name-and-pos (cons name position))))))))
 (global-set-key (kbd "M-i") 'ido-goto-symbol)
 
-;; ;; http://www.masteringemacs.org/articles/2010/12/22/fixing-mark-commands-transient-mark-mode/
-;; (defun push-mark-no-activate ()
-;;   "Pushes `point' to `mark-ring' and does not activate the region
-;; Equivalent to \\[set-mark-command] when \\[transient-mark-mode] is disabled"
-;;   (interactive)
-;;   (push-mark (point) t nil)
-;;   (message "Pushed mark to ring"))
-;; (global-set-key (kbd "C-`") 'push-mark-no-activate)
+;; http://www.masteringemacs.org/articles/2010/12/22/fixing-mark-commands-transient-mark-mode/
+(defun push-mark-no-activate ()
+  "Pushes `point' to `mark-ring' and does not activate the region
+Equivalent to \\[set-mark-command] when \\[transient-mark-mode] is disabled"
+  (interactive)
+  (push-mark (point) t nil)
+  (message "Pushed mark to ring"))
+(global-set-key (kbd "C-`") 'push-mark-no-activate)
 
-;; (defun jump-to-mark ()
-;;   "Jumps to the local mark, respecting the `mark-ring' order.
-;; This is the same as using \\[set-mark-command] with the prefix argument."
-;;   (interactive)
-;;   (set-mark-command 1))
-;; (global-set-key (kbd "M-`") 'jump-to-mark)
+(defun jump-to-mark ()
+  "Jumps to the local mark, respecting the `mark-ring' order.
+This is the same as using \\[set-mark-command] with the prefix argument."
+  (interactive)
+  (set-mark-command 1))
+(global-set-key (kbd "M-`") 'jump-to-mark)
 
 ;; copy-line del-line 
 ;; http://xahlee.org/emacs/emacs_copy_cut_current_line.html
@@ -443,14 +440,14 @@ in current buffer."
 
 ;; jump-char
 ;; http://emacsrocks.com/e04.
-(require 'jump-char)
-(global-set-key [(meta m)] 'jump-char-forward)
-(global-set-key [(shift meta m)] 'jump-char-backward)
+;; (require 'jump-char)
+;; (global-set-key [(meta m)] 'jump-char-forward)
+;; (global-set-key [(shift meta m)] 'jump-char-backward)
 
 ;; ace jump
 ;; http://www.emacswiki.org/emacs/AceJump
-(require 'ace-jump-mode)
-(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+;; (require 'ace-jump-mode)
+;; (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 
 (require 'expand-region)
 (global-set-key (kbd "C-\\") 'er/expand-region)
@@ -502,11 +499,6 @@ in current buffer."
 
 (require 'wgrep)
 
-;; (if (eq system-uses-terminfo t)
-;; 	(progn                              ;; PuTTY hack - needs to be in SCO mode
-;; 	  (define-key input-decode-map "\eOn" [C->])))
-
-
 ;; multiple-cursor
 (require 'multiple-cursors)
 (global-set-key (kbd "C-S-c C-S-c") 'mc/edit-lines)
@@ -519,15 +511,20 @@ in current buffer."
   "override org-export-as-html with bodyonly option"
   (interactive)
   (org-export-as-html nil nil nil nil t nil))
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ (if window-system
+     '(custom-enabled-themes (quote (wombat)))
+   ) 
  )
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(font-lock-string-face ((t (:foreground "color-34")))))
+;; (custom-set-faces
+;;  ;; custom-set-faces was added by Custom.
+;;  ;; If you edit it by hand, you could mess it up, so be careful.
+;;  ;; Your init file should contain only one such instance.
+;;  ;; If there is more than one, they won't work right.
+;;  '(font-lock-string-face ((t (:foreground "color-34")))))

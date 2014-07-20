@@ -6,9 +6,8 @@ ido.last
 session.*
 tramp
 elpa
-emms
+eshell
 .emacs.desktop*
-site-lisp/adventur-mode
 *.elc
 .DS_Store
 .mc-lists.el

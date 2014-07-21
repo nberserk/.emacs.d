@@ -91,13 +91,11 @@
 ;; (add-to-list 'auto-mode-alist '("\\.ps1\\'" . powershell-mode)) ; PowerShell script
 
 ;;yasnippet from http://xahlee.org/emacs/emacs_templates.html
-;(require 'setup-yasnippet) ;; not yasnippet-bundle
-;; Develop in ~/emacs.d/snippets, but also
-;; include snippets that come with yasnippet
-;;(setq yas/root-directory `(,(expand-file-name "snippets" dotfiles-dir)))
-;;			   ,(expand-file-name "yasnippet/snippets" site-lisp-dir)))
-;;(mapc 'yas/load-directory yas/root-directory)
-;(yas/global-mode 1)
+(require 'setup-yasnippet) ;; not yasnippet-bundle
+;; (setq yas/root-directory `(,(expand-file-name "snippets" dotfiles-dir)))
+;; 			   ,(expand-file-name "yasnippet/snippets" site-lisp-dir)))
+;; (mapc 'yas-load-directory yas/root-directory)
+;; (yas/global-mode 1)
 
 ;; show column number
 (setq column-number-mode t)

@@ -55,7 +55,7 @@
 ;(define-key global-map (kbd "M-t") 'helm-for-files)
 
 ;; package
-(require 'setup-package)
+;(require 'setup-package)
 
 ;; Install extensions if they're missing
 ;; (defun init--install-packages ()
@@ -486,6 +486,7 @@ in current buffer."
 ;; change default buffer mgmt to ibuffer
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
+(server-start)
 ;; (require 'inline-string-rectangle)
 ;; (global-set-key (kbd "C-x r t") 'inline-string-rectangle)
 

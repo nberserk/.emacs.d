@@ -11,3 +11,4 @@ eshell
 *.elc
 .DS_Store
 .mc-lists.el
+.#*

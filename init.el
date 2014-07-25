@@ -8,8 +8,11 @@
 (setq inhibit-startup-message t)
 (setq visible-bell 1)
 
+;; adjust screensize
 (if window-system
-    (set-frame-size (selected-frame) 160 60))
+    (if  (getenv "P4PORT") 
+	(set-frame-size (selected-frame) 198 93)
+        (set-frame-size (selected-frame) 160 40)     ))
 
 
 ;; proxy setting
@@ -55,7 +58,7 @@
 ;(define-key global-map (kbd "M-t") 'helm-for-files)
 
 ;; package
-;(require 'setup-package)
+(require 'setup-package)
 
 ;; Install extensions if they're missing
 ;; (defun init--install-packages ()

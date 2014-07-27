@@ -443,14 +443,14 @@ in current buffer."
 
 ;; jump-char
 ;; http://emacsrocks.com/e04.
-;; (require 'jump-char)
-;; (global-set-key [(meta m)] 'jump-char-forward)
-;; (global-set-key [(shift meta m)] 'jump-char-backward)
+(require 'jump-char)
+(global-set-key [(meta m)] 'jump-char-forward)
+(global-set-key [(shift meta m)] 'jump-char-backward)
 
 ;; ace jump
-;; http://www.emacswiki.org/emacs/AceJump
-;; (require 'ace-jump-mode)
-;; (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+;;http://www.emacswiki.org/emacs/AceJump
+(require 'ace-jump-mode)
+(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
 
 (require 'expand-region)
 (global-set-key (kbd "C-\\") 'er/expand-region)

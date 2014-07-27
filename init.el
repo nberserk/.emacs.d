@@ -11,8 +11,10 @@
 ;; adjust screensize
 (if window-system
     (if  (getenv "P4PORT") 
-	(set-frame-size (selected-frame) 198 93)
-        (set-frame-size (selected-frame) 160 40)     ))
+        (set-frame-size (selected-frame) 198 93)
+      (set-frame-size (selected-frame) 160 60)
+      )
+  )
 
 
 ;; proxy setting

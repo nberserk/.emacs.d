@@ -459,6 +459,11 @@ in current buffer."
 (require 'magit)
 (global-set-key (kbd "C-x g") 'magit-status)
 
+(autoload 'zap-up-to-char "misc"
+  "Kill up to, but not including ARGth occurrence of CHAR.")
+(global-set-key (kbd "M-z") 'zap-up-to-char)
+(global-set-key (kbd "M-Z") 'zap-to-char)
+
 ;; are we on windows?
 (setq is-nt (equal system-type 'windows-nt))
 (when is-nt (require 'windows))

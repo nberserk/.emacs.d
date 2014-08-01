@@ -7,6 +7,7 @@
 (if (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 (setq inhibit-startup-message t)
 (setq visible-bell 1)
+(mouse-wheel-mode -1)
 
 ;; adjust screensize
 (if window-system

@@ -158,7 +158,6 @@
 (add-hook 'c-mode-common-hook
           (lambda ()
             (c-set-style "stroustrup")
-            (c-toglle-auto-newline t)
              ))
 (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
 

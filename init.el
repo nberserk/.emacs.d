@@ -11,12 +11,11 @@
 
 ;; adjust screensize
 (if window-system
-    (if  (getenv "P4PORT") 
+    (if (string= system-name "iMacSDE.local")
         (set-frame-size (selected-frame) 198 93)
       (set-frame-size (selected-frame) 160 60)
-      )
+        )    
   )
-
 
 ;; proxy setting
 (defun darren-proxy ()
@@ -153,7 +152,6 @@
 ; c/cpp
 (require 'cc-mode)
 (setq-default tab-width 4
-
               c-basic-offset 4
               indent-tabs-mode nil)
 (add-hook 'c-mode-common-hook
@@ -606,3 +604,6 @@ This command does not push erased text to kill-ring."
 (global-set-key (kbd "<M-backspace>") 'my-backward-delete-word)
 ;; (global-set-key (kbd "C-k") 'my-delete-line)
 ;; (global-set-key (kbd "C-S-k") 'my-delete-line-backward)
+
+
+(global-set-key (kbd "C-x o") 'ace-window)

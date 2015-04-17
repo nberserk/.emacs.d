@@ -560,10 +560,8 @@ If WINDOW is the only one in its frame, then `delete-frame' too."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- (if window-system
-     '(custom-enabled-themes (quote (wombat)))
-   ) 
- )
+ '(custom-enabled-themes (quote (wombat)))
+ '(markdown-command "/usr/local/bin/markdown"))
 
 ;; delete text not kill into kill-ring
 (defun my-delete-word (arg)
@@ -607,3 +605,19 @@ This command does not push erased text to kill-ring."
 
 
 (global-set-key (kbd "C-x o") 'ace-window)
+
+;; sbt 
+(setq sbt:program-name "/usr/local/bin/sbt")
+(add-hook 'scala-mode-hook '(lambda ()
+   ;; sbt-find-definitions is a command that tries to find (with grep)
+   ;; the definition of the thing at point.
+   (local-set-key (kbd "M-.") 'sbt-find-definitions)
+
+   ;; use sbt-run-previous-command to re-compile your code after changes
+   (local-set-key (kbd "C-x '") 'sbt-run-previous-command)
+   ;; Bind C-a to 'comint-bol when in sbt-mode. This will move the
+   ;; cursor to just after prompt.
+   (local-set-key (kbd "C-a") 'comint-bol)
+))
+;; sbt
+

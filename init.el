@@ -619,5 +619,10 @@ This command does not push erased text to kill-ring."
    ;; cursor to just after prompt.
    (local-set-key (kbd "C-a") 'comint-bol)
 ))
-;; sbt
+;; end of sbt
 
+;; webmode
+(require 'web-mode)
+(add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(setq web-mode-enable-auto-expanding t)
+;; end of webmode

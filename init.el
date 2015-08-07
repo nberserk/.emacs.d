@@ -148,17 +148,20 @@
 
 ; tab
 (setq-default indent-tabs-mode nil)
+(setq tab-width 2) ; or any other preferred value
+(defvaralias 'c-basic-offset 'tab-width)
+(defvaralias 'cperl-indent-level 'tab-width)
 
 ; c/cpp
-(require 'cc-mode)
-(setq-default tab-width 4
-              c-basic-offset 4
-              indent-tabs-mode nil)
-(add-hook 'c-mode-common-hook
-          (lambda ()
-            (c-set-style "stroustrup")
-             ))
-(define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
+;; (require 'cc-mode)
+;; (setq-default tab-width 4
+;;               c-basic-offset 4
+;;               indent-tabs-mode nil)
+;; (add-hook 'c-mode-common-hook
+;;           (lambda ()
+;;             (c-set-style "stroustrup")
+;;              ))
+;; (define-key c-mode-base-map (kbd "RET") 'newline-and-indent)
 
 ;(setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 48 56 64 72))
 ;; i wonder below line is necessary. not enough tab-width ?
@@ -624,5 +627,14 @@ This command does not push erased text to kill-ring."
 ;; webmode
 (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.js?\\'" . web-mode))
+
 (setq web-mode-enable-auto-expanding t)
+(defun my-web-mode-hook ()
+  "Hooks for Web mode."
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+)
+(add-hook 'web-mode-hook  'my-web-mode-hook)
 ;; end of webmode

@@ -564,6 +564,7 @@ If WINDOW is the only one in its frame, then `delete-frame' too."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes (quote (wombat)))
+ '(js2-basic-offset 2)
  '(markdown-command "/usr/local/bin/markdown"))
 
 ;; delete text not kill into kill-ring
@@ -627,7 +628,8 @@ This command does not push erased text to kill-ring."
 ;; webmode
 (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-(add-to-list 'auto-mode-alist '("\\.js?\\'" . web-mode))
+(add-to-list 'auto-mode-alist '("\\.js\\'" . js2-mode))
+;;(add-to-list 'auto-mode-alist '("\\.js?\\'" . web-mode))
 
 (setq web-mode-enable-auto-expanding t)
 (defun my-web-mode-hook ()
@@ -638,3 +640,9 @@ This command does not push erased text to kill-ring."
 )
 (add-hook 'web-mode-hook  'my-web-mode-hook)
 ;; end of webmode
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

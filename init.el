@@ -205,46 +205,23 @@
 (global-set-key (kbd "C-x <right>") 'windmove-right) 
 (global-set-key (kbd "C-x <left>") 'windmove-left)
 
-;; ido makes competing buffers and finding files easier
-;; http://www.emacswiki.org/cgi-bin/wiki/InteractivelyDoThings
-(setq 
-  ido-save-directory-list-file "~/.emacs.d/ido.last"
+;; start helm
+(require 'helm-config)
+(helm-mode 1)
 
-  ido-ignore-buffers ;; ignore these guys
-  '("\\` " "^\*Mess" "^\*Back" ".*Completion" "^\*Ido" "^\*trace" "^\*compilation" "^\*GTAGS" "^session\.*")
-;;  ido-work-directory-list '("/WSs/OspdScripts/")
-  ido-case-fold  t                 ; be case-insensitive
-  ido-enable-last-directory-history t ; remember last used dirs
-  ido-max-work-directory-list 30   ; should be enough
-  ido-max-work-file-list      50   ; remember many
-  ido-use-filename-at-point 'guess
-  ;; ido-use-url-at-point nil         ; don't use url at point (annoying)
-  ido-everywhere t				   ; ??
-  ido-enable-flex-matching t     ; don't try to be too smart
-  ido-max-prospects 15              ; don't spam my minibuffer
-  ido-confirm-unique-completion t) ; wait for RET, even with unique completion
-;; Display ido results vertically, rather than horizontally
-(setq ido-decorations (quote ("\n-> " "" "\n   " "\n   ..." "[" "]" " [No match]" " [Matched]" " [Not readable]" " [Too big]" " [Confirm]")))
-(defun ido-disable-line-trucation () (set (make-local-variable 'truncate-lines) nil))
-(add-hook 'ido-minibuffer-setup-hook 'ido-disable-line-trucation)
-;; when using ido, the confirmation is rather annoying...
-(setq confirm-nonexistent-file-or-buffer nil)
-(ido-mode 1) ;; for buffers and files
+(define-key helm-map (kbd "<tab>") 'helm-execute-persistent-action) ; rebind tab to do persistent action
+(define-key helm-map (kbd "C-i") 'helm-execute-persistent-action) ; make TAB works in terminal
+(define-key helm-map (kbd "C-z")  'helm-select-action) ; list actions using C-z
+;; end of helm
 
 ;; recentf
 ;; get rid of `find-file-read-only' and replace it with something
 ;; more useful.
-(global-set-key (kbd "C-x C-r") 'ido-recentf-open)
+
 ;; enable recent files mode.
 (recentf-mode t)
 (setq recentf-max-saved-items 50)		; 50 files ought to be enough.
-
-(defun ido-recentf-open ()
-  "Use `ido-completing-read' to \\[find-file] a recent file"
-  (interactive)
-  (if (find-file (ido-completing-read "Find recent file: " recentf-list))
-      (message "Opening file...")
-    (message "Aborting")))
+(global-set-key (kbd "C-x C-r") 'helm-recentf) ;; recentf
 
 ;; ;; abbrev
 ;; ;; stop asking whether to save newly added abbrev when quitting emacs
@@ -501,12 +478,6 @@ in current buffer."
 (server-start)
 ;; (require 'inline-string-rectangle)
 ;; (global-set-key (kbd "C-x r t") 'inline-string-rectangle)
-
-;; (require 'rename-sgml-tag)
-;; (define-key sgml-mode-map (kbd "C-c C-r") 'rename-sgml-tag)
-
-;; (require 'js2-rename-var)
-;; (define-key js2-mode-map (kbd "C-c C-r") 'js2-rename-var)
 
 (require 'wgrep)
 

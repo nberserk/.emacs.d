@@ -596,6 +596,28 @@ This command does not push erased text to kill-ring."
 ))
 ;; end of sbt
 
+;; <org2blog
+(setq org2blog/wp-blog-alist
+      '(("wordpress"
+         :url "https://nberserk.wordpress.com/xmlrpc.php"
+         :username "nberserk"
+         :default-title "Hello"
+         :default-categories ("org2blog" "emacs")
+         :tags-as-categories nil)
+        ))
+(setq org2blog/wp-buffer-template
+      "-----------------------
+#+TITLE: %s
+#+DATE: %s
+-----------------------\n")
+(defun my-format-function (format-string)
+  (format format-string
+          org2blog/wp-default-title
+          (format-time-string "%d-%m-%Y" (current-time))))
+
+(setq org2blog/wp-buffer-format-function 'my-format-function)
+;; org2blog>
+
 ;; webmode
 (require 'web-mode)
 (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))

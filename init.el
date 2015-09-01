@@ -47,7 +47,21 @@
 ;; (setq backup-directory-alist `(("" . "~/.emacs.d/backup/")))
 
 ;; auto indent
-(define-key global-map (kbd "RET") 'newline-and-indent)
+;;(define-key global-map (kbd "RET") 'newline-and-indent)
+
+;;; Set localized PATH for OS X
+(defun my-add-path (path-element)
+  "Add the specified PATH-ELEMENT to the Emacs PATH."
+  (interactive "DEnter directory to be added to path: ")
+  (if (file-directory-p path-element)
+     (progn
+       (setenv "PATH" (concat (expand-file-name path-element) path-separator (getenv "PATH")))
+       (add-to-list 'exec-path (expand-file-name path-element)))))
+
+(if (fboundp 'my-add-path)
+   (let ((my-paths (list "/opt/local/bin" "/usr/local/bin")))
+      (dolist (path-to-add my-paths (getenv "PATH"))
+         (my-add-path path-to-add))))
 
 ;; helm
 ;;(require 'helm-config)

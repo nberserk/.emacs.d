@@ -630,7 +630,42 @@ This command does not push erased text to kill-ring."
           (format-time-string "%d-%m-%Y" (current-time))))
 
 (setq org2blog/wp-buffer-format-function 'my-format-function)
+
+
 ;; org2blog>
+
+
+;; call python script
+;; http://emacs.stackexchange.com/questions/13210/run-python-script-with-after-save-hook?newreg=0a9c59b401e04e70acb38a2e88685f2d
+(setq org-publish-project-alist
+           '(("orgfiles"
+               :base-directory "~/projects/nberserk.github.io/org"
+               :base-extension "org"
+               :publishing-directory "~/projects/nberserk.github.io/_posts"
+               :publishing-function org-html-publish-to-html
+               :exclude "PrivatePage.org"   ;; regexp
+               :headline-levels 3
+               :section-numbers nil
+               :with-toc nil
+               :html-head "<link rel=\"stylesheet\"
+                       href=\"../other/mystyle.css\" type=\"text/css\"/>"
+               :html-preamble t
+               :body-only t)
+     
+              ("images"
+               :base-directory "~/images/"
+               :base-extension "jpg\\|gif\\|png"
+               :publishing-directory "/ssh:user@host:~/html/images/"
+               :publishing-function org-publish-attachment)
+     
+              ("other"
+               :base-directory "~/other/"
+               :base-extension "css\\|el"
+               :publishing-directory "/ssh:user@host:~/html/other/"
+               :publishing-function org-publish-attachment)
+              ("website" :components ("orgfiles" "images" "other"))))
+
+
 
 ;; webmode
 (require 'web-mode)

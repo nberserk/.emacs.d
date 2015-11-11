@@ -688,3 +688,9 @@ This command does not push erased text to kill-ring."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+;; artist mode
+;; enable moust right click
+(eval-after-load "artist"
+   '(define-key artist-mode-map [(down-mouse-3)] 'artist-mouse-choose-operation)
+   )

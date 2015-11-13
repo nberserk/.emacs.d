@@ -694,3 +694,6 @@ This command does not push erased text to kill-ring."
 (eval-after-load "artist"
    '(define-key artist-mode-map [(down-mouse-3)] 'artist-mouse-choose-operation)
    )
+
+;; disable S+space change language
+(global-unset-key (kbd "S-SPC"))

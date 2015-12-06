@@ -695,5 +695,20 @@ This command does not push erased text to kill-ring."
    '(define-key artist-mode-map [(down-mouse-3)] 'artist-mouse-choose-operation)
    )
 
+
 ;; disable S+space change language
 (global-unset-key (kbd "S-SPC"))
+
+(dolist (command '(yank yank-pop))
+  (eval `(defadvice ,command (after indent-region activate)
+           (and (not current-prefix-arg)
+                (member major-mode '(emacs-lisp-mode lisp-mode
+                                                     clojure-mode    scheme-mode
+                                                     haskell-mode    ruby-mode
+                                                     rspec-mode      python-mode
+                                                     c-mode          c++-mode
+                                                     objc-mode       latex-mode
+                                                     plain-tex-mode))
+                (let ((mark-even-if-inactive transient-mark-mode))
+                  (indent-region (region-beginning) (region-end) nil))))))
+

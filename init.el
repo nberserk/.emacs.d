@@ -503,10 +503,17 @@ in current buffer."
 (global-set-key (kbd "C-c C-M-.") 'mc/mark-all-like-this)
 ;;[(shift meta m)] 'jump-char-backward)
 
-(defun darren-org-export-as-html ()
+
+
+
+
+(defun darren-publish ()
   "override org-export-as-html with bodyonly option"
-  (interactive)
-  (org-export-as-html nil nil nil nil t nil))
+  (interactive)  
+  (org-publish-current-file)  
+  (shell-command-to-string
+   (concat "python /Users/darren/projects/nberserk.github.io/export.py " (file-name-nondirectory buffer-file-name)))
+  )
 
 ;; --------------------------------------------------------------------------
 ;; eshell

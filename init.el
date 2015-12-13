@@ -509,8 +509,8 @@ in current buffer."
 
 (defun darren-publish ()
   "override org-export-as-html with bodyonly option"
-  (interactive)  
-  (org-publish-current-file)  
+  (interactive)
+  (org-publish-current-file)
   (shell-command-to-string
    (concat "python /Users/darren/projects/nberserk.github.io/export.py " (file-name-nondirectory buffer-file-name)))
   )
@@ -718,4 +718,3 @@ This command does not push erased text to kill-ring."
                                                      plain-tex-mode))
                 (let ((mark-even-if-inactive transient-mark-mode))
                   (indent-region (region-beginning) (region-end) nil))))))
-
